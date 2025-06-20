@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emek Pazarı - El Emeği Ürünler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #fffaf4;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(to right, #f77f00, #ffb703);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 26px;
+      font-weight: 600;
+      border-bottom: 3px solid #e76f00;
+    }
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-family: inherit;
+    }
+    button {
+      background-color: #f77f00;
+      color: white;
+      font-weight: bold;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #e06c00;
+    }
+    .ilan {
+      background: #fff;
+      padding: 16px;
+      border: 2px solid #fcbf49;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .ilan h3 {
+      margin: 0 0 10px;
+      color: #d35400;
+    }
+    .ilan p {
+      margin: 5px 0;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>🧵 Emek Pazarı - El Emeği Ürünler Pazarı</header>
+  <main>
+    <form id="ilanForm">
+      <input type="text" id="baslik" placeholder="Ürün Başlığı" required />
+      <textarea id="aciklama" placeholder="Ürün Açıklaması" required></textarea>
+      <input type="text" id="sehir" placeholder="Şehir" required />
+      <input type="text" id="iletisim" placeholder="İletişim Bilgisi" required />
+      <button type="submit">İlanı Ekle</button>
+    </form>
+
+    <section id="ilanlar"></section>
+  </main>
+  <footer>© 2025 Emek Pazarı - Tüm hakları saklıdır</footer>
+
+  <script>
+    const form = document.getElementById("ilanForm");
+    const ilanlarEl = document.getElementById("ilanlar");
+
+    function ilanlariGoster() {
+      ilanlarEl.innerHTML = "";
+      const ilanlar = JSON.parse(localStorage.getItem("ilanlar") || "[]");
+      ilanlar.forEach((ilan) => {
+        const div = document.createElement("div");
+        div.className = "ilan";
+        div.innerHTML = `
+          <h3>${ilan.baslik}</h3>
+          <p><strong>Açıklama:</strong> ${ilan.aciklama}</p>
+          <p><strong>Şehir:</strong> ${ilan.sehir}</p>
+          <p><strong>İletişim:</strong> ${ilan.iletisim}</p>
+        `;
+        ilanlarEl.appendChild(div);
+      });
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const ilan = {
+        baslik: baslik.value,
+        aciklama: aciklama.value,
+        sehir: sehir.value,
+        iletisim: iletisim.value
+      };
+      const ilanlar = JSON.parse(localStorage.getItem("ilanlar") || "[]");
+      ilanlar.unshift(ilan);
+      localStorage.setItem("ilanlar", JSON.stringify(ilanlar));
+      form.reset();
+      ilanlariGoster();
+    });
+
+    ilanlariGoster();
+  </script>
+</body>
+</html>
